@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>ESI Sponsor Image Flipper</title>
+
+  <!-- https://www.kirupa.com/html5/centering_vertically_horizontally.htm -->
+  <style>
+    #box {
+      width: 200px;
+      height: 200px;
+      padding: 15px;
+      /*background-color: #555555;*/ /* DEV */
+    }
+    #sponsorImage {
+      width: 100%;
+      display: none; /* Start hidden */
+    }
+    .Aligner {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="box" class="Aligner">
+    <img id="sponsorImage">
+  </div>
+</body>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script>
+  var current = 0;
+  <!-- Array of Sponsor Image names -->
+  var sponsorImages = [
+      'esi-with-white.png',
+      'smash-and-grab.png',
+      'challonge-white.png',
+      'logo-full-vertical.png',
+      'OCZ.png',
+      'Twitch_BlackLogowwhite.png',
+      'xsplit-white.png'
+    ]
+
+  var IMAGE_TIME = 10000;
+  var PERCENT_OF_TIME_PER_FADE = 3.0/16.0;
+  var FADE   = IMAGE_TIME * PERCENT_OF_TIME_PER_FADE;
+  var CLENCH = IMAGE_TIME * (1.0 - (2.0 * PERCENT_OF_TIME_PER_FADE));
+
+  rotateSponsors();
+  // http://stackoverflow.com/questions/2133166/loop-timer-in-javascript
+  var tid = setInterval(rotateSponsors, IMAGE_TIME)
+
+  function rotateSponsors() {
+    // Change the image
+    $('#sponsorImage').prop('src', sponsorImages[current]);
+
+    // Move to the next image or rotate to beginning
+    current = (current + 1) % sponsorImages.length;
+
+    // Wait >> FadeIn >> Clench >> FadeOut
+    $('#sponsorImage').delay(200);
+    $('#sponsorImage').fadeIn(FADE);
+    $('#sponsorImage').delay(CLENCH);
+    $('#sponsorImage').fadeOut(FADE);
+  }
+</script>
+</html>
