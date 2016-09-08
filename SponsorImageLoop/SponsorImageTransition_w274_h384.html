@@ -1,7 +1,8 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
 <head>
   <title>ESI Sponsor Image Flipper</title>
+  <meta charset="utf-8">
 
   <!-- https://www.kirupa.com/html5/centering_vertically_horizontally.htm -->
   <style>
@@ -11,7 +12,7 @@
       padding: 15px;
       /*background-color: #555555;*/ /* DEV */
     }
-    #sponsorImage {
+    #image {
       width: 100%;
       display: none; /* Start hidden */
     }
@@ -24,18 +25,17 @@
 </head>
 <body>
   <div id="box" class="Aligner">
-    <img id="sponsorImage">
+    <img id="image">
   </div>
 </body>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="rotateImage.js"></script>
 <script>
-  var current = 0;
-  // Array of Sponsor Image names
-  // IMPORTANT: Image name cannot contain spaces!
-  var sponsorImages = [
+  <!-- Array of Sponsor Image names -->
+  var myImages = [
       'esi-with-white.png',
-      'Smash-and-Grab-with-border.png',
+      'smash-and-grab.png',
       'challonge-white.png',
       'logo-full-vertical.png',
       'OCZ.png',
@@ -43,26 +43,12 @@
       'xsplit-white.png'
     ]
 
-  var IMAGE_TIME = 10000;
-  var PERCENT_OF_TIME_PER_FADE = 3.0/16.0;
-  var FADE   = IMAGE_TIME * PERCENT_OF_TIME_PER_FADE;
-  var CLENCH = IMAGE_TIME * (0.9 - (2.0 * PERCENT_OF_TIME_PER_FADE));
+    // Change the timing :)
+    // var IMAGE_TIME = 10000;
+    // var PERCENT_OF_TIME_PER_FADE = 3.0/16.0;
 
-  rotateSponsors(); // Load the first image
-  // http://stackoverflow.com/questions/2133166/loop-timer-in-javascript
-  var tid = setInterval(rotateSponsors, IMAGE_TIME) // Start the timer
-
-  function rotateSponsors() {
-    // Wait >> FadeIn >> Clench >> FadeOut
-    $('#sponsorImage').delay(500)
-                      .fadeIn(FADE)
-                      .delay(CLENCH)
-                      .fadeOut(FADE)
-                      .css("display", "none")
-                      .prop('src', sponsorImages[current]); // Change the image
-
-    // Move to the next image or rotate to beginning
-    current = (current + 1) % sponsorImages.length;
-  }
+    rotateImage('#image', myImages);
+    // http://stackoverflow.com/questions/2133166/loop-timer-in-javascript
+    var tid = setInterval(function() {rotateImage('#image', myImages);}, IMAGE_TIME)
 </script>
 </html>
